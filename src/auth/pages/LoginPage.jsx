@@ -2,12 +2,27 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Google } from '@mui/icons-material';
 import { AuthLayout } from '../layout/AuthLayout';
+import { useForm } from '../../hooks/useForm';
+import { useDispatch } from 'react-redux';
+import { checkingAuthentication } from '../../strore/auth/thunks';
 
 
 export const LoginPage = () => {
+
+  
+  const {email, password, onInputChange} = useForm({email: 'test@test.com', password: '123456'});
+
+  const dispatch = useDispatch();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      checkingAuthentication()
+    )
+    console.log({email, password});
+  }
   return (
     <AuthLayout title="Login">
-      <form>
+      <form onSubmit={ handleSubmit }>
           <Grid container>
             <Grid item xs={ 12 } sx={{ mt: 2 }}>
               <TextField 
@@ -15,6 +30,9 @@ export const LoginPage = () => {
                 type="email" 
                 placeholder='correo@google.com' 
                 fullWidth
+                name="email"
+                value={email}
+                onChange={onInputChange}
               />
             </Grid>
 
@@ -24,12 +42,15 @@ export const LoginPage = () => {
                 type="password" 
                 placeholder='Contraseña' 
                 fullWidth
+                name="password"
+                value={password}
+                onChange={onInputChange}
               />
             </Grid>
             
             <Grid container spacing={ 2 } sx={{ mb: 2, mt: 1 }}>
               <Grid item xs={ 12 } sm={ 6 }>
-                <Button variant='contained' fullWidth>
+                <Button variant='contained' fullWidth type='submit'>
                   Login
                 </Button>
               </Grid>

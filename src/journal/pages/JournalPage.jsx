@@ -3,8 +3,10 @@ import { AddOutlined } from '@mui/icons-material';
 
 import { JournalLayout } from '../layout/JournalLayout';
 import { NoteView, NothingSelectedView } from '../views';
+import { useForm } from '../../hooks/useForm';
 
 export const JournalPage = () => {
+
   return (
     <JournalLayout>
       
