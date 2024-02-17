@@ -4,7 +4,9 @@ import { Google } from '@mui/icons-material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks/useForm';
 import { useDispatch } from 'react-redux';
-import { checkingAuthentication } from '../../strore/auth/thunks';
+import { checkingAuthentication, startGoogleSignIn } from '../../strore/auth/thunks';
+import { signInWithGoogle } from '../../firebase/providers';
+import { signInWithGoogleSupabse } from '../../supabase/provider';
 
 
 export const LoginPage = () => {
@@ -17,8 +19,17 @@ export const LoginPage = () => {
     e.preventDefault();
     dispatch(
       checkingAuthentication()
-    )
-    console.log({email, password});
+      )
+      console.log({email, password});
+    }
+    
+    
+    const onGoogleSignIn = async () => { 
+      
+      signInWithGoogleSupabse()
+
+      //dispatch(startGoogleSignIn()) 
+
   }
   return (
     <AuthLayout title="Login">
@@ -55,7 +66,8 @@ export const LoginPage = () => {
                 </Button>
               </Grid>
               <Grid item xs={ 12 } sm={ 6 }>
-                <Button variant='contained' fullWidth>
+                <Button variant='contained' fullWidth
+                  onClick={ onGoogleSignIn }>
                   <Google />
                   <Typography sx={{ ml: 1 }}>Google</Typography>
                 </Button>
